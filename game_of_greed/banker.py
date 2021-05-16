@@ -3,12 +3,10 @@ class Banker:
     def __init__(self):
         self.balance = 0
         self.shelved = 0
-        # self.int = int
 
     def __str__(self):
         return self.balance
 
-    
     def shelf(self, int):
         
         self.shelved += int

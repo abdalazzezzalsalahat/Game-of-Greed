@@ -1,7 +1,11 @@
 from random import randint, sample
 from collections import Counter
 
+
 class GameLogic:
+
+    def __init__(self):
+        pass 
 
     @staticmethod
     def roll (dice):
@@ -20,6 +24,8 @@ class GameLogic:
         elif len(count)==3 and count.most_common(3)[2][1] == 2:
             score += 1500
             return score
+
+
 
         # 3x1's	1,000
         # 4x1's	2,000
@@ -81,23 +87,12 @@ class GameLogic:
             score+=sum
 
         # unless rolled at one time then its automatic 10,000
+        if len(count)==2 and count.most_common(2)[1][1] == 3:  
+               score = score * 2
+            
+            
+
                 
         return score
-    
-
-
-
-
-
-
-
-
-
-
-
-
-                    
-                
-
 
 
