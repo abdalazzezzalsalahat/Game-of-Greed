@@ -26,7 +26,7 @@ To get started with the project:
 * Fourth commit - Updating README file and verification and quick fixes.
 
 ### TODO Checklist
-​- [x] Create a GameLogic class.
+- [x] Create a GameLogic class.
 - [x] Add rolling dice method to generate random tuple.
 - [x] Add method to calculate points.
 - [x] Add Banker class to create banker instance.
@@ -37,3 +37,5 @@ To get started with the project:
 - [x] Add a unit test for left overs ones.
 - [x] Add a unit test for left overs fives.
 - [x] Add a unit test for two trios tuples.
+
+[Pull Request](https://github.com/abdalazzezzalsalahat/Game-of-Greed/pull/6)
