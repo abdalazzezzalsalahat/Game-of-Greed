@@ -45,6 +45,43 @@ def test_three_fives():
     expected = 500
     assert actual == expected
 
+
+@pytest.mark.parametrize(
+    "test_input,expected",
+    [
+        ((5, 5, 5, 2, 2, 2), 1400),
+        ((2, 2, 2, 1, 1, 1), 1200)
+        # ((1, 1, 1, 1, 1, 1), 4000),
+        # ((1, 1, 1, 1, 1, 1), 4000),
+        # ((1, 1, 1, 1, 1, 1), 4000),
+        # ((1, 1, 1, 1, 1, 1), 4000),
+        # ((1, 1, 1, 1, 1, 1), 4000),
+    ]
+)
+@pytest.mark.skip
+def test_two_trios():
+    actual = GameLogic.calculate_score((5, 5, 5, 2, 2, 2))
+    expected = 1400
+    assert actual == expected
+
+
+
+@pytest.mark.skip
+def test_leftover_ones():
+    actual = GameLogic.calculate_score((4, 1, 3))
+    expected = 100
+    assert actual == expected
+
+
+
+@pytest.mark.skip
+def test_leftover_fives():
+    actual = GameLogic.calculate_score((5, 2, 3))
+    expected = 50
+    assert actual == expected
+
+
+
 @pytest.mark.skip
 def test_three_ones():
     actual = GameLogic.calculate_score((1, 1, 1, 2, 3, 4))
