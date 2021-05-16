@@ -7,16 +7,19 @@ class GameLogic:
     def roll (dice):
         return tuple(randint(1,6) for n in range(0, dice))
 
+    @staticmethod
     def calculate_score(dice_set):
         score = 0
         count = Counter(dice_set)
         # Straight 1- 6 (1500)
         if len(count) == 6:
             score += 1500
+            return score
       
         # Three Pairs 1500
-        elif len(count)==3 && count.most_common(3)[2][1] == 2:
+        elif len(count)==3 and count.most_common(3)[2][1] == 2:
             score += 1500
+            return score
 
         # 3x1's	1,000
         # 4x1's	2,000
@@ -52,35 +55,36 @@ class GameLogic:
         for key in count:
 
             sum = 0
-             if key == 1 && count[key] < 2:
+            if key == 1 and count[key] <= 2:
                 sum += count[key]*100
-            if key == 5 && count[key] < 2:
+            elif key == 5 and count[key] <= 2:
                 sum += count[key]*50
 
-            if key == 1 && count[key] > 2:
+            elif key == 1 and count[key] > 2:
                 sum += (count[key] - 2)*1000
             
-            elif key == 5 && count[key] > 2:
+            elif key == 5 and count[key] > 2:
                 sum += (count[key] - 2)*500
             
-            elif key != 5 || key != 1:
-                if count[key] = 3:
+            elif key != 5 or key != 1:
+                if count[key] == 3:
                     sum += key*100
-                elif count[key] = 4:
+                elif count[key] == 4:
                     sum += key*200
 
-                elif count[key] = 5:
+                elif count[key] == 5:
                     sum += key*300
 
-                elif count[key] = 6:
+                elif count[key] == 6:
                     sum += key*400 
                 
-                score+=sum
+            score+=sum
 
         # unless rolled at one time then its automatic 10,000
                 
         return score
     
+
 
 
 
