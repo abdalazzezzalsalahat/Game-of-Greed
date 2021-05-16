@@ -1,5 +1,5 @@
 import pytest
-from game_of_greed.GG import GameLogic
+from game_of_greed.game_logic import GameLogic
 
 pytestmark = [pytest.mark.version_1]
 
@@ -45,40 +45,26 @@ def test_three_fives():
     expected = 500
     assert actual == expected
 
-# @pytest.mark.skip
-# @pytest.mark.parametrize(
-#     "test_input,expected",
-#     [
-#         ((5, 5, 5, 2, 2, 2), 1400),
-#         ((2, 2, 2, 1, 1, 1), 1200)
-#         # ((1, 1, 1, 1, 1, 1), 4000),
-#         # ((1, 1, 1, 1, 1, 1), 4000),
-#         # ((1, 1, 1, 1, 1, 1), 4000),
-#         # ((1, 1, 1, 1, 1, 1), 4000),
-#         # ((1, 1, 1, 1, 1, 1), 4000),
-#     ]
-# )
 
-# @pytest.mark.skip
-# def test_two_trios():
-#     actual = GameLogic.calculate_score((5, 5, 5, 2, 2, 2))
-#     expected = 1400
-#     assert actual == expected
+def test_two_trios():
+    actual = GameLogic.calculate_score((5, 5, 5, 2, 2, 2))
+    expected = 1400
+    assert actual == expected
 
 
 
 
 def test_leftover_ones():
-    actual = GameLogic.calculate_score((4, 1, 3))
-    expected = 100
+    actual = GameLogic.calculate_score((4, 1, 3, 2, 6, 1))
+    expected = 200
     assert actual == expected
 
 
 
 
 def test_leftover_fives():
-    actual = GameLogic.calculate_score((5, 2, 3))
-    expected = 50
+    actual = GameLogic.calculate_score((5, 2, 2, 5, 3, 6))
+    expected = 100
     assert actual == expected
 
 
@@ -174,6 +160,10 @@ def test_six_ones():
         ((1, 2, 3, 4, 5, 6), 1500),
         ((2, 2, 3, 3, 4, 6), 0),
         ((2, 2, 3, 3, 6, 6), 1500),
+        ((5, 5, 5, 2, 2, 2), 1400),
+        ((2, 2, 2, 1, 1, 1), 2400),
+        ((3, 3, 3, 4, 4, 4), 1400)
+
     ],
 )
 
@@ -181,3 +171,4 @@ def test_six_ones():
 def test_all(test_input, expected):
     actual = GameLogic.calculate_score(test_input)
     assert actual == expected
+
