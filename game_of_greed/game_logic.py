@@ -12,8 +12,8 @@ class GameLogic:
         # qutt = ('no','n','quit','q')
         print('''Welcome to Game of Greed''')
         res = input('''Wanna play?''')
-        def exit_fun(points):
-            print(f'''Total score is {points} points\nThanks for playing. You earned {points} points''')
+        def exit_fun(total):
+            print(f'''Total score is {total} points\nThanks for playing. You earned {total} points''')
             exit()
 
         if res.lower() == 'n':
@@ -22,6 +22,7 @@ class GameLogic:
         elif res.lower() == 'y':
             rounds = 1
             points = 0
+            total = 0
 
             while rounds in range(6):
                 print(f'Starting round {rounds}')
@@ -30,18 +31,20 @@ class GameLogic:
                 print(','.join([str(i) for i in rolled ]))
                 res = input('Enter dice to keep (no spaces), or (q)uit: ')
                 if  res.lower() == 'q':
-                    exit_fun(points)
+                    exit_fun(total)
 
                 # simulation case 3
                 else:
                     if int(res) in rolled:
                         points = self.calculate(tuple([int(res)]))
-                        print(f'You have {points} unbanked points and {res} dice remaining')
+                        print(f'You have {points} unbanked points and {len(rolled)-1} dice remaining')
                         res = input('(r)oll again, (b)ank your points or (q)uit ')
                         if res == 'q':
-                            exit_fun(points)
-                        print(f'You banked {points} points in round {rounds}')
-                        print(f'Total score is {points} points')
+                            exit_fun(total)
+                        elif res == 'b':
+                            print(f'You banked {points} points in round {rounds}')
+                            total += points
+                        print(f'Total score is {total} points')
                         rounds+=1
                     else:
                         print('error')
@@ -57,7 +60,9 @@ class GameLogic:
 # You banked 50 points in round 1
 # Total score is 50 points
 # Starting round 2
-# Rolling 6 dice...
+# Rolling 6 dice...meLogic()
+
+# game.play()
 # 6,5,1,6,6,6
 # Enter dice to keep (no spaces), or (q)uit: q
 # Total score is 50 points
