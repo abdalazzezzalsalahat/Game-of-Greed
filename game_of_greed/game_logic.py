@@ -4,8 +4,8 @@ from collections import Counter
 
 class GameLogic:
 
-    def __init__(self,res):
-        self.res = res
+    def __init__(self,roller = None):
+        self.roller = roller or self.roll
 
     def play(self):
         # qutt = ('no','n','quit','q')
@@ -20,14 +20,12 @@ class GameLogic:
             while rounds in range(6):
                 print(f'Starting round {rounds}')
                 print('Rolling 6 dice...')
-                # rolled = GameLogic.roll(7-rounds)
-                # print(','.join([str(i) for i in rolled ]))
-                print('1,2,3,2,3,4')
+                rolled = self.roller(7-rounds)
+                print(','.join([str(i) for i in rolled ]))
                 res = input('Enter dice to keep (no spaces), or (q)uit: ')
                 if  res.lower() == 'q':
                     print(f'''Total score is {points} points\nThanks for playing. You earned {points} points''')
                     exit()
-
     @staticmethod
     def roll (dice):
         return tuple(randint(1,6) for n in range(0, dice))
@@ -115,4 +113,6 @@ class GameLogic:
         return score
 
 
-# GameLogic.play()
+# game = GameLogic()
+
+# game.play()
