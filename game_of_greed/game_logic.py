@@ -4,19 +4,25 @@ from collections import Counter
 
 class GameLogic:
 
-    def __init__(self,roller = None):
+    def __init__(self,roller = None, calculate=0):
         self.roller = roller or self.roll
+        self.calculate = calculate or self.calculate_score
 
     def play(self):
         # qutt = ('no','n','quit','q')
         print('''Welcome to Game of Greed''')
         res = input('''Wanna play?''')
+        def exit_fun(points):
+            print(f'''Total score is {points} points\nThanks for playing. You earned {points} points''')
+            exit()
+
         if res.lower() == 'n':
             print('OK. Maybe another time')
             exit()
         elif res.lower() == 'y':
             rounds = 1
             points = 0
+
             while rounds in range(6):
                 print(f'Starting round {rounds}')
                 print('Rolling 6 dice...')
@@ -24,8 +30,49 @@ class GameLogic:
                 print(','.join([str(i) for i in rolled ]))
                 res = input('Enter dice to keep (no spaces), or (q)uit: ')
                 if  res.lower() == 'q':
-                    print(f'''Total score is {points} points\nThanks for playing. You earned {points} points''')
-                    exit()
+                    exit_fun(points)
+
+                # simulation case 3
+                else:
+                    if int(res) in rolled:
+                        points = self.calculate(tuple([int(res)]))
+                        print(f'You have {points} unbanked points and {res} dice remaining')
+                        res = input('(r)oll again, (b)ank your points or (q)uit ')
+                        if res == 'q':
+                            exit_fun(points)
+                        print(f'You banked {points} points in round {rounds}')
+                        print(f'Total score is {points} points')
+                        rounds+=1
+                    else:
+                        print('error')
+                        break
+                   
+
+
+
+
+
+
+
+# You banked 50 points in round 1
+# Total score is 50 points
+# Starting round 2
+# Rolling 6 dice...
+# 6,5,1,6,6,6
+# Enter dice to keep (no spaces), or (q)uit: q
+# Total score is 50 points
+# Thanks for playing. You earned 50 points
+
+                # else:
+                #     print('Enter number between 1 and 6')
+
+                
+
+
+
+
+
+
     @staticmethod
     def roll (dice):
         return tuple(randint(1,6) for n in range(0, dice))
