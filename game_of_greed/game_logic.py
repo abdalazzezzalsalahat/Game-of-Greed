@@ -4,9 +4,28 @@ from collections import Counter
 
 class GameLogic:
 
-    def __init__(self):
-        pass 
+    def __init__(self,roller = None):
+        self.roller = roller or self.roll
 
+    def play(self):
+        # qutt = ('no','n','quit','q')
+        print('''Welcome to Game of Greed''')
+        res = input('''Wanna play?''')
+        if res.lower() == 'n':
+            print('OK. Maybe another time')
+            exit()
+        elif res.lower() == 'y':
+            rounds = 1
+            points = 0
+            while rounds in range(6):
+                print(f'Starting round {rounds}')
+                print('Rolling 6 dice...')
+                rolled = self.roller(7-rounds)
+                print(','.join([str(i) for i in rolled ]))
+                res = input('Enter dice to keep (no spaces), or (q)uit: ')
+                if  res.lower() == 'q':
+                    print(f'''Total score is {points} points\nThanks for playing. You earned {points} points''')
+                    exit()
     @staticmethod
     def roll (dice):
         return tuple(randint(1,6) for n in range(0, dice))
@@ -24,8 +43,6 @@ class GameLogic:
         elif len(count)==3 and count.most_common(3)[2][1] == 2:
             score += 1500
             return score
-
-
 
         # 3x1's	1,000
         # 4x1's	2,000
@@ -96,3 +113,6 @@ class GameLogic:
         return score
 
 
+# game = GameLogic()
+
+# game.play()
