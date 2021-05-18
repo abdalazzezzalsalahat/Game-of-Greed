@@ -23,11 +23,12 @@ class GameLogic:
             rounds = 1
             points = 0
             total = 0
+            dice = 6
 
             while rounds in range(6):
                 print(f'Starting round {rounds}')
-                print('Rolling 6 dice...')
-                rolled = self.roller(7-rounds)
+                print(f'Rolling {dice} dice...')
+                rolled = self.roller(dice)
                 print(','.join([str(i) for i in rolled ]))
                 res = input('Enter dice to keep (no spaces), or (q)uit: ')
                 if  res.lower() == 'q':
@@ -35,15 +36,20 @@ class GameLogic:
 
                 # simulation case 3
                 else:
-                    if int(res) in rolled:
-                        points = self.calculate(tuple([int(res)]))
-                        print(f'You have {points} unbanked points and {len(rolled)-1} dice remaining')
+                    if int(res): # removed in rolls
+                        li = list()
+                        for i in res:
+                            li.append(int(i))
+                        points = self.calculate(tuple(li))
+                        dice = dice - len(li)
+                        print(f'You have {points} unbanked points and {dice} dice remaining')
                         res = input('(r)oll again, (b)ank your points or (q)uit ')
                         if res == 'q':
                             exit_fun(total)
                         elif res == 'b':
                             print(f'You banked {points} points in round {rounds}')
                             total += points
+                            dice = 6
                         print(f'Total score is {total} points')
                         rounds+=1
                     else:
@@ -112,7 +118,7 @@ class GameLogic:
         # 5x6's	1,800
         # 6x6's	2,400
     
-        # 3x4's	400
+        # 3x4's	400You can view your grades based on What-If scores so that you
         # 4x4's	800
         # 5x4's	1,200
         # 6x4's	1,600
