@@ -30,7 +30,7 @@ def test_cheat_and_fix():
     diffs = diff(Game().play, path="tests/flow/cheat_and_fix.sim.txt")
     assert not diffs, diffs
 
-# @pytest.mark.skip
+@pytest.mark.skip
 def test_zilcher():
     """
     No scoring dice results in a 'zilch'
