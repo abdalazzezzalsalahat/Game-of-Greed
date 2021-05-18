@@ -34,6 +34,13 @@ class Game:
 
                 print(f'Rolling {dice} dice...')
                 rolled = self.roller(dice)
+                rolled_points = self.calculate(rolled)
+                print()
+                zilch_result = GameLogic.zilch(rolled_points)
+                if zilch_result:
+                    rounds += 1
+                    continue
+
                 print(f'*** ' + ' '.join([str(i) for i in rolled ])+' ***')
                 print('Enter dice to keep (no spaces), or (q)uit:')
                 res = input('> ')
@@ -82,16 +89,16 @@ class Game:
             exit_fun(total)
      
 
-def subset_check(test_list, sub_list):
-    set1 = set(test_list)
-    set2 = set(sub_list)
-    is_subset = set2.issubset(set1)
-    print(is_subset)
-    # if(all(x in test_list for x in sub_list)):
-    #     print('yes')
+# def subset_check(test_list, sub_list):
+#     set1 = set(test_list)
+#     set2 = set(sub_list)
+#     is_subset = set2.issubset(set1)
+#     print(is_subset)
+#     # if(all(x in test_list for x in sub_list)):
+#     #     print('yes')
 
 
-subset_check([1, 2, 3, 4], [4, 6])
+# subset_check([1, 2, 3, 4], [4, 6])
 
 class GameLogic:
 
@@ -168,6 +175,14 @@ class GameLogic:
             score.append(5)
         
         return tuple(score)
+
+    @staticmethod
+    def zilch(points):
+        if points == 0:
+            print("****************************************\n**        Zilch!!! Round over         **\n****************************************")
+            return True
+     
+
 
     
 
