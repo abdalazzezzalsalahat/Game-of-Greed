@@ -54,6 +54,10 @@ class Game:
                             rounds+=1
                             dice = 6
                             continue
+                        if not GameLogic.validate_keepers(rolled, tuple(li)):
+                            print('Cheater!!! Or possibly made a typo...')
+                            continue
+
                         print(f'You have {roll_again} unbanked points and {dice} dice remaining')
                         print('(r)oll again, (b)ank your points or (q)uit:')
                         res = input('> ')
@@ -144,6 +148,30 @@ class GameLogic:
         return score
 
 
-game = Game()
+    @staticmethod
+    def validate_keepers(set, sub_set):
 
-game.play()
+        sub_set_dictionary = Counter(sub_set)
+        set_dictionary = Counter(set)
+        for key in sub_set_dictionary:
+            if not sub_set_dictionary[key] <= set_dictionary[key]:
+                return False
+            else:
+                return True
+    
+    @staticmethod
+    def get_scorers(tup):
+        score = list()
+        if 1 in tup:
+            score.append(1)
+        if 5 in tup:
+            score.append(5)
+        
+        return tuple(score)
+
+    
+
+
+# game = Game()
+
+# game.play()
