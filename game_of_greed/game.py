@@ -6,11 +6,12 @@ class Game:
     def __init__(self,roller = None, calculate=0):
         self.roller = roller or GameLogic.roll
         self.calculate = calculate or GameLogic.calculate_score
+    
 
     def play(self):
-        # qutt = ('no','n','quit','q')
         print('''Welcome to Game of Greed''')
-        res = input('''Wanna play?''')
+        print('(y)es to play or (n)o to decline')
+        res = input('''> ''')
         def exit_fun(total):
             print(f'''Total score is {total} points\nThanks for playing. You earned {total} points''')
             exit()
@@ -23,13 +24,19 @@ class Game:
             points = 0
             total = 0
             dice = 6
+            roll_again=0
+            flag = True
 
-            while rounds in range(6):
-                print(f'Starting round {rounds}')
+            while total <10000:
+                if flag:
+                    print(f'Starting round {rounds}')
+
+
                 print(f'Rolling {dice} dice...')
                 rolled = self.roller(dice)
-                print(','.join([str(i) for i in rolled ]))
-                res = input('Enter dice to keep (no spaces), or (q)uit: ')
+                print(f'*** ' + ' '.join([str(i) for i in rolled ])+' ***')
+                print('Enter dice to keep (no spaces), or (q)uit:')
+                res = input('> ')
                 if  res.lower() == 'q':
                     exit_fun(total)
 
@@ -40,23 +47,47 @@ class Game:
                         for i in res:
                             li.append(int(i))
                         points = self.calculate(tuple(li))
+                        roll_again += points
                         dice = dice - len(li)
-                        print(f'You have {points} unbanked points and {dice} dice remaining')
-                        res = input('(r)oll again, (b)ank your points or (q)uit ')
+                        if dice == 0:
+                            flag = True
+                            rounds+=1
+                            dice = 6
+                            continue
+                        print(f'You have {roll_again} unbanked points and {dice} dice remaining')
+                        print('(r)oll again, (b)ank your points or (q)uit:')
+                        res = input('> ')
                         if res == 'q':
                             exit_fun(total)
                         elif res == 'b':
-                            print(f'You banked {points} points in round {rounds}')
-                            total += points
+                            print(f'You banked {roll_again} points in round {rounds}')
+                            total += roll_again
                             dice = 6
-                        print(f'Total score is {total} points')
-                        rounds+=1
+                            roll_again=0
+                            flag =True
+                        elif res == 'r' and dice > 0 :
+                            
+                            flag = False                                
+
+                        if flag:
+                            print(f'Total score is {total} points')
+                            rounds+=1
                     else:
                         print('error')
                         break
+            exit_fun(total)
      
 
+def subset_check(test_list, sub_list):
+    set1 = set(test_list)
+    set2 = set(sub_list)
+    is_subset = set2.issubset(set1)
+    print(is_subset)
+    # if(all(x in test_list for x in sub_list)):
+    #     print('yes')
 
+
+subset_check([1, 2, 3, 4], [4, 6])
 
 class GameLogic:
 
@@ -113,6 +144,6 @@ class GameLogic:
         return score
 
 
-# game = Game()
+game = Game()
 
-# game.play()
+game.play()
