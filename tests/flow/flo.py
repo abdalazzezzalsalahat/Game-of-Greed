@@ -1,5 +1,5 @@
 import builtins
-from game_of_greed.game_logic import GameLogic
+from game_of_greed.game import Game
 
 
 class Flo:
@@ -45,7 +45,7 @@ class Flo:
 
         flo = Flo(path)
 
-        game = GameLogic(flo._mock_roller)
+        game = Game(flo._mock_roller)
 
         try:
             game.play()
