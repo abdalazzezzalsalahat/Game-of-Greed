@@ -3,7 +3,7 @@ from collections import Counter
 
 class Game:
     
-    def __init__(self,roller = None, calculate=0):
+    def __init__(self, roller = None, calculate = 0):
         self.roller = roller or GameLogic.roll
         self.calculate = calculate or GameLogic.calculate_score
     
@@ -30,14 +30,11 @@ class Game:
             while total <10000:
                 if flag:
                     print(f'Starting round {rounds}')
-
-
                 print(f'Rolling {dice} dice...')
                 rolled = self.roller(dice)
                 rolled_points = self.calculate(rolled)
-                print()
-                zilch_result = GameLogic.zilch(rolled_points)
-                if zilch_result:
+                if rolled_points == 0:
+                    print("****************************************\n**        Zilch!!! Round over         **\n****************************************")
                     rounds += 1
                     continue
 
@@ -176,17 +173,17 @@ class GameLogic:
         
         return tuple(score)
 
-    @staticmethod
-    def zilch(points):
-        if points == 0:
-            print("****************************************\n**        Zilch!!! Round over         **\n****************************************")
-            return True
+    # @staticmethod
+    # def zilch(points):
+    #     if points == 0:
+    #         print("****************************************\n**        Zilch!!! Round over         **\n****************************************")
+    #         return True
      
 
 
     
 
 
-# game = Game()
+game = Game()
 
-# game.play()
+game.play()
