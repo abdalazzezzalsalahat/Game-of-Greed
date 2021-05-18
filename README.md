@@ -47,4 +47,4 @@ To get started with the project:
 - [x] Handle third simulation case scenario.
 - [x] Handle fourth simulation case scenario.
 
-[Pull Request](https://github.com/abdalazzezzalsalahat/Game-of-Greed/pull/12)
+[Pull Request](https://github.com/abdalazzezzalsalahat/Game-of-Greed/pull/17)
