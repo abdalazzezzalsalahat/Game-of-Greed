@@ -1,3 +1,5 @@
+from random import randint, sample
+from collections import Counter
 
 class GameLogic:
 
