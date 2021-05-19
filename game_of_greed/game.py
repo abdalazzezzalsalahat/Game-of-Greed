@@ -16,7 +16,8 @@ class Game:
     to_shelf = 0
     stop = False
 
-    def play(self):
+    def play(self, roller = None):
+        roller = roller or GameLogic.roll
         print('''Welcome to Game of Greed''')
         print('(y)es to play or (n)o to decline')
         res = input('''> ''')
@@ -44,30 +45,32 @@ class Game:
 
     def validate_in(self, input, roll):
         lst = list(input)
-        saved = tuple([int(n) for n in lst])
+        saved = tuple([int(n.strip()) for n in lst])
         for num in saved:
-            print(num)
             if num not in roll:
                 return False
             return True
 
     def valid_cases(self, list):
         Game.remaining_dice = Game.remaining_dice - len(list)
-        print(f'You have {self.to_shelf} unbanked points and {self.remaining_dice} dice remaining')
-        print('(r)oll again, (b)ank your points or (q)uit:')
-        next_step = input('> ')
+        if Game.remaining_dice > 0:
+            print(f'You have {Game.to_shelf} unbanked points and {Game.remaining_dice} dice remaining')
+            print('(r)oll again, (b)ank your points or (q)uit:')
+            next_step = input('> ')
 
-        if len(list) == 6:
-            Game.remaining_dice = 6
-        if next_step == 'b':
-            self.banked()
-        elif next_step == 'q':
-            self.end()
-        elif next_step == 'r':
-            Game.to_shelf += Game.banker.shelved
+            if len(list) == 6:
+                Game.remaining_dice = 6
+            if next_step == 'b':
+                self.banked()
+            elif next_step == 'q':
+                self.end()
+            elif next_step == 'r':
+                Game.to_shelf += Game.banker.shelved
+                self.rolling_again()
+        else:
             self.rolling_again()
 
-    def banked():
+    def banked(self):
         Game.banker.shelf(Game.to_shelf)
         banked = Game.banker.bank()
         Game.to_shelf = 0
@@ -76,9 +79,45 @@ class Game:
         Game.round +=1
         print(f'Total score is {Game.score} points')
 
-    def rolling_again():
-        pass
-            
+    def rolling_again(self):
+        print(f'Rolling {Game.remaining_dice} dice...')
+        roll = self.roller(Game.remaining_dice)
+        print(f'*** ' + ' '.join([str(i) for i in roll ])+' ***')
+        lst = list(roll)
+        validate = Game.game.calculate_score(tuple([int(x) for x in lst]))
+        if validate == 0:
+            print("****************************************\n**        Zilch!!! Round over         **\n****************************************")
+            print(f'You banked {validate} points in round {Game.round}')
+            print(f'Total score is {Game.score} points')
+            Game.round += 1
+            Game.remaining_dice = 6
+            # print(f'Starting round {Game.round}')
+            self.rolling_again
+        else:
+            print('Enter dice to keep (no spaces), or (q)uit:')
+            dice_to_keep = input("> ")
+            if dice_to_keep == 'q':
+                self.end()
+            else:
+                valid = self.validate_in(dice_to_keep, roll)
+                while valid == False:
+                    print('Cheater!!! Or possibly made a typo...')
+                    print(f'*** ' + ' '.join([str(i) for i in roll ])+' ***')
+                    print('Enter dice to keep (no spaces), or (q)uit:')
+                    dice_to_keep = input("> ")
+                    if dice_to_keep == 'q':
+                        self.end()
+                        break
+                    else:
+                        valid = self.validate_in(dice_to_keep, roll)
+                lst = list(dice_to_keep)
+                total = Game.game.calculate_score(tuple([int(x) for x in lst]))
+                Game.to_shelf += total
+                self.valid_cases(lst)
+
+if __name__ == '__main__':
+    game = Game()
+    game.play()
 
 
 
@@ -152,13 +191,14 @@ class Game:
         #     print(f'''Total score is {total} points\nThanks for playing. You earned {total} points''')
         #     exit()
 
+
 # def subset_check(test_list, sub_list):
-#     set1 = set(test_list)
-#     set2 = set(sub_list)
-#     is_subset = set2.issubset(set1)
-#     print(is_subset)
-#     # if(all(x in test_list for x in sub_list)):
-#     #     print('yes')
+    #     set1 = set(test_list)
+    #     set2 = set(sub_list)
+    #     is_subset = set2.issubset(set1)
+    #     print(is_subset)
+    #     # if(all(x in test_list for x in sub_list)):
+    #     #     print('yes')
 
 # subset_check([1, 2, 3, 4], [4, 6])
 
@@ -169,6 +209,4 @@ class Game:
     #         return True
      
 
-# game = Game()
 
-# game.play()
