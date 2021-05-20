@@ -1,10 +1,8 @@
-from random import randint, sample
+# from game_of_greed.game import Game
+from random import randint
 from collections import Counter
 
 class GameLogic:
-
-    def __init__(self):
-        pass
 
     @staticmethod
     def roll (dice):
@@ -59,16 +57,23 @@ class GameLogic:
                score = score * 2
         return score
 
-    @staticmethod
-    def validate_keepers(set, sub_set):
-
-        sub_set_dictionary = Counter(sub_set)
-        set_dictionary = Counter(set)
-        for key in sub_set_dictionary:
-            if not sub_set_dictionary[key] <= set_dictionary[key]:
-                return False
-            else:
-                return True
+    # @staticmethod
+    # def validate_keepers(dice_list, dice_input):
+    #     return not Counter(dice_input) - Counter(dice_list)
+        # a = Counter(dice_input).most_common()
+        # b = Counter(dice_list).most_common()
+        # if len(a) > len(b):
+        #   return True
+        # votes =0
+        # fair_game = False
+        # for i in a:
+        #      for j in b:
+        #          if i[0] == j[0]:
+        #              if i[1] <= j[1]:
+        #                   votes +=1
+        # if len(a) == votes:
+        #     fair_game = True
+        # return fair_game
 
     @staticmethod
     def get_scorers(tup):
@@ -77,5 +82,18 @@ class GameLogic:
             score.append(1)
         if 5 in tup:
             score.append(5)
-        
         return tuple(score)
+
+    # @staticmethod 
+    # def get_scorers(dice):
+    #     all = GameLogic.calculate_score(dice)
+    #     if all == 0: 
+    #         return tuple()
+    #     sco = []
+    #     for i in range(len(dice)):
+    #         roll = dice[:i] + dice[i + 1:]
+    #         sub = GameLogic.calculate_score(roll)
+    #         if sub != all:
+    #             sco.append(dice[1])
+    #     return tuple(sco)
+
