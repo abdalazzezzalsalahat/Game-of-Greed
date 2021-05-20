@@ -8,18 +8,15 @@ class Banker:
         return self.balance
 
     def shelf(self, int):
-        
         self.shelved += int
-        return self.shelved
 
     def bank(self):
+        depo = self.shelved
         self.balance = 0
         self.balance += self.shelved
-        self.clear_shelf()
-
-        return self.balance
+        self.shelved = 0
+        return depo
 
     def clear_shelf(self):
         self.shelved = 0
-        return self.shelved
 

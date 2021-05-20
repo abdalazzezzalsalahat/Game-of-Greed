@@ -1,3 +1,4 @@
 Welcome to Game of Greed
-Wanna play?n
+(y)es to play or (n)o to decline
+> n
 OK. Maybe another time
