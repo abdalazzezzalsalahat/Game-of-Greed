@@ -24,6 +24,7 @@ class Game:
     score = 0
     to_shelf = 0
     stop = False
+    valid = True
 
     def play(self, roller = None):
         global rolling
@@ -51,6 +52,7 @@ class Game:
         Game.stop = True
 
     def validate_keepers(self, roll, userinput):
+        # return not Counter(userinput) - Counter(roll)
         userinput = Counter(userinput).most_common()
         roll = Counter(roll).most_common()
         if len(userinput) > len(roll):
@@ -94,7 +96,7 @@ class Game:
         Game.round +=1
         print(f'Total score is {Game.score} points')
     
-    def zilch (lst):
+    def zilch (self, lst):
         validate = Game.game.calculate_score(tuple([int(x) for x in lst]))
         if validate == 0:
             print('****************************************')
@@ -102,44 +104,103 @@ class Game:
             print('****************************************')
             return True
         return False
+
+    def case(self):
+        print('Enter dice to keep, or (q)uit:')
+        dice_to_keep = input("> ")
+        if dice_to_keep == 'q':
+            self.end()
+        else: 
+            self.state()
+
+    def quit(self, roll, dice_to_keep):
+        while not self.validate_keepers(roll, dice_to_keep):
+            print('Cheater!!! Or possibly made a typo...')
+            print(f'*** ' + ' '.join([str(i) for i in roll ])+' ***')
+            print('Enter dice to keep, or (q)uit:')
+            self.case()
     
-    # @staticmethod
-    def rolling_again(self):
+    def state(self):
         if self.remaining_dice > 0:
             print(f'Rolling {Game.remaining_dice} dice...')
             roll = rolling(Game.remaining_dice)
             print(f'*** ' + ' '.join([str(i) for i in roll ])+' ***')
             lst = list(roll)
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # @staticmethod
+    def rolling_again(self):
+
+            
+
+
+
             validate = Game.game.calculate_score(tuple([int(x) for x in lst]))
+
+
+
+
             if validate == 0:
                 Game.zilch(lst)
-                print(f'You banked {validate} points in round {Game.round}')
-                print(f'Total score is {Game.score} points')
-                Game.round += 1
-                Game.to_shelf = 0
-                Game.remaining_dice = 6
-                self.rolling_again
+                
+
+
+
+
             else:
-                print('Enter dice to keep, or (q)uit:')
-                dice_to_keep = input("> ")
-                if dice_to_keep == 'q':
-                    self.end()
-                else:
-                    valid = self.validate_keepers(roll, dice_to_keep)
-                    while valid == True:
-                        print('Cheater!!! Or possibly made a typo...')
-                        print(f'*** ' + ' '.join([str(i) for i in roll ])+' ***')
-                        print('Enter dice to keep, or (q)uit:')
-                        dice_to_keep = input("> ")
-                        if dice_to_keep == 'q':
-                            self.end()
-                            break
-                        else:
-                            valid = self.validate_keepers(roll, dice_to_keep)
-                    lst = list(dice_to_keep)
-                    total = Game.game.calculate_score(tuple([int(x) for x in lst]))
-                    Game.to_shelf += total
-                    self.valid_cases(lst)
+                
+                lst = list(dice_to_keep)
+
+
+
+                total = Game.game.calculate_score(tuple([int(x) for x in lst]))
+                Game.to_shelf += total
+                self.valid_cases(lst)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
     game = Game()
